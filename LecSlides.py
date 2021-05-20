@@ -26,24 +26,21 @@ def main():
 
         vidcap = cv2.VideoCapture(fileName)
         print("\n=================================")
-        print(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         bar = Bar('Processing', max=int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT)), suffix='%(percent)d%%')
 
         fps = int(vidcap.get(cv2.CAP_PROP_FPS))
         successA, imageA = vidcap.read()
         imageAHash = imagehash.average_hash(Image.fromarray(imageA).convert("RGB"))
-        
+
         workDir = 'imgs'
         if os.path.exists(workDir) and os.path.isdir(workDir):
             shutil.rmtree(workDir)
         os.mkdir("imgs")
-        
+
         img_path = os.path.join(os.getcwd() , 'imgs')
 
-        print()
-        print(cv2.imwrite(os.path.join(img_path , r'1.jpg'), imageA))
-        print(os.path.join(img_path , r'1.jpg'))
+        cv2.imwrite(os.path.join(img_path , r'1.jpg'), imageA)
         imgs = [os.path.join(img_path , r'1.jpg')]
 
         count = 2
@@ -54,9 +51,7 @@ def main():
                 imageBHash = imagehash.average_hash(Image.fromarray(imageB).convert("RGB"))
                 if imageAHash != imageBHash:
                     path = os.path.join(img_path , r'%d.jpg') % count
-                    print()
-                    print(cv2.imwrite(path, imageB))
-                    print(path)
+                    cv2.imwrite(path, imageB)
                     imgs.append(path)
                     count += 1
                 imageAHash = imageBHash
