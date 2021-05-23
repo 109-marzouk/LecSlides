@@ -1,4 +1,5 @@
 import os, cv2, math, imagehash, img2pdf, shutil, re
+from pathlib import Path
 from PIL import Image
 from progress.bar import Bar
 
@@ -40,6 +41,7 @@ def main():
 
         img_path = os.path.join(os.getcwd() , 'imgs')
 
+        cv2.putText(imageA,'LecSlides | 109.marzouk@gmail.com',(20,20), cv2.FONT_HERSHEY_PLAIN, 1.5,(255,0,0),2)
         cv2.imwrite(os.path.join(img_path , r'1.jpg'), imageA)
         imgs = [os.path.join(img_path , r'1.jpg')]
 
@@ -51,6 +53,7 @@ def main():
                 imageBHash = imagehash.average_hash(Image.fromarray(imageB).convert("RGB"))
                 if imageAHash != imageBHash:
                     path = os.path.join(img_path , r'%d.jpg') % count
+                    cv2.putText(imageB,'LecSlides | 109.marzouk@gmail.com',(20,20), cv2.FONT_HERSHEY_PLAIN, 1.5,(255,0,0),1)
                     cv2.imwrite(path, imageB)
                     imgs.append(path)
                     count += 1
@@ -61,7 +64,7 @@ def main():
 
         if not os.path.exists('Results'):
             os.mkdir("Results")
-        with open(os.path.join(os.getcwd(), r'Results\[ %s ] - result.pdf') % fileName, "ab") as f:
+        with open(os.path.join(os.getcwd(), r'Results\[ %s ] - result.pdf') % Path(fileName).name, "ab") as f:
             f.write(img2pdf.convert(imgs))
 
         if os.path.exists(workDir) and os.path.isdir(workDir):
