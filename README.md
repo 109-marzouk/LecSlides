@@ -8,4 +8,4 @@
 - progress
 
 Run the following command to download the packages:
-`pip install cv2 imagehash img2pdf progress`
+`pip install opencv-python imagehash img2pdf progress`
